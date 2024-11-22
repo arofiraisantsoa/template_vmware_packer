@@ -63,7 +63,12 @@
       {
         "type": "vagrant",
         "keep_input_artifact": true,
-        "output": "builds/debian10-packer.box"
+        "provider_override": "vmware"
+      }
+      ,
+      {
+        "type": "artifice",
+        "files": "builds/debian12-packer.ovf"
       }
     ]
   }
