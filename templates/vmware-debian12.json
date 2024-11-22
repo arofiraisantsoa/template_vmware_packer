@@ -61,7 +61,7 @@
     ],
     "post-processors": [
       {
-        "type": "vagrant",
+        "type": "vmware-iso",
         "keep_input_artifact": true,
         "provider_override": "vmware"
       }
