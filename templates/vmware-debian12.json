@@ -22,13 +22,12 @@
         "cpus": "1",
         "disk_size": "30000",
         "format": "ova",
-        "guest_additions_mode": "upload",
         "guest_os_type": "Debian_64",
         "headless": "false",
-        "http_directory": "packer_files/configs",
+        "http_directory": "configs/",
         "iso_checksum": "sha256:133430141272d8bf96cfb10b6bfd1c945f5a59ea0efc2bcb56d1033c7f2866ea",
         "iso_target_path": "./iso/debian-10.11.0-amd64-netinst.iso",
-        "iso_url": "https://cdimage.debian.org/cdimage/archive/10.11.0/amd64/iso-cd/debian-10.11.0-amd64-netinst.iso",
+        "iso_url": "R:/DSI/INFRA/Systèmes/Linux/ISOs/debian-10.3.0-amd64-netinst.iso",
         "memory": "1024",
         "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
         "ssh_password": "{{user `ssh_pass`}}",
@@ -36,24 +35,24 @@
         "ssh_username": "{{user `ssh_user`}}",
         "type": "vmware-iso",
         "output_directory": "builds/",
-        "vm_name": "{{ `hostname`}}"
+        "vm_name": "{{user `hostname`}}"
           }
     ],
     "variables": {
       "domain": "local",
-      "hostname": "",
+      "hostname": "debian12",
       "ssh_pass": "jaimelegenepi",
       "ssh_user": "gestsvcansible"
     },
     "provisioners": [
       {
         "destination": "/tmp/",
-        "source": "packer_files/configs/id_rsa_gestsvcansible.pub",
+        "source": "configs/id_rsa_gestsvcansible.pub",
         "type": "file"
       },
       {
         "type": "shell",
-        "script": "packer_files/scripts/script_start.sh",
+        "script": "scripts/script_start.sh",
         "execute_command": "echo {{user `ssh_pass`}} | sudo -S -E sh -c '{{ .Vars }} {{ .Path }}'",
         "pause_before": "10s",
         "timeout": "10s"
@@ -61,7 +60,7 @@
     ],
     "post-processors": [
       {
-        "type": "vmware-iso",
+        "type": "vagrant",
         "keep_input_artifact": true,
         "provider_override": "vmware"
       }
