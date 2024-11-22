@@ -1,0 +1,70 @@
+{
+    "builders": [
+      {
+        "boot_command": [
+          "<esc><wait>",
+          "install <wait>",
+          " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+          "debian-installer=fr_FR.UTF-8 <wait>",
+          "auto <wait>",
+          "locale=fr_FR.UTF-8 <wait>",
+          "kbd-chooser/method=fr <wait>",
+          "keyboard-configuration/xkb-keymap=fr <wait>",
+          "netcfg/get_hostname={{ .Name }} <wait>",
+          "netcfg/get_domain=local <wait>",
+          "fb=false <wait>",
+          "debconf/frontend=noninteractive <wait>",
+          "console-setup/ask_detect=false <wait>",
+          "console-keymaps-at/keymap=fr <wait>",
+          "grub-installer/bootdev=/dev/sda <wait>",
+          "<enter><wait>"
+        ],
+        "cpus": "1",
+        "disk_size": "30000",
+        "format": "ova",
+        "guest_additions_mode": "upload",
+        "guest_os_type": "Debian_64",
+        "headless": "false",
+        "http_directory": "packer_files/configs",
+        "iso_checksum": "sha256:133430141272d8bf96cfb10b6bfd1c945f5a59ea0efc2bcb56d1033c7f2866ea",
+        "iso_target_path": "./iso/debian-10.11.0-amd64-netinst.iso",
+        "iso_url": "https://cdimage.debian.org/cdimage/archive/10.11.0/amd64/iso-cd/debian-10.11.0-amd64-netinst.iso",
+        "memory": "1024",
+        "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+        "ssh_password": "{{user `ssh_pass`}}",
+        "ssh_timeout": "20m",
+        "ssh_username": "{{user `ssh_user`}}",
+        "type": "vmware-iso",
+        "output_directory": "builds/",
+        "vm_name": "{{ `hostname`}}"
+          }
+    ],
+    "variables": {
+      "domain": "local",
+      "hostname": "",
+      "ssh_pass": "jaimelegenepi",
+      "ssh_user": "gestsvcansible"
+    },
+    "provisioners": [
+      {
+        "destination": "/tmp/",
+        "source": "packer_files/configs/id_rsa_gestsvcansible.pub",
+        "type": "file"
+      },
+      {
+        "type": "shell",
+        "script": "packer_files/scripts/script_start.sh",
+        "execute_command": "echo {{user `ssh_pass`}} | sudo -S -E sh -c '{{ .Vars }} {{ .Path }}'",
+        "pause_before": "10s",
+        "timeout": "10s"
+      }
+    ],
+    "post-processors": [
+      {
+        "type": "vagrant",
+        "keep_input_artifact": true,
+        "output": "builds/debian10-packer.box"
+      }
+    ]
+  }
+  

@@ -1,0 +1,11 @@
+{
+    "domain": "local",
+    "hostname": "",
+    "ssh_pass": "gestsvcansible",
+    "ssh_user": "gestsvcansible",
+    "output_directory": "builds/",
+    "http_directory": "packer_files/configs",
+    "iso_target_path": "./iso/debian-10.11.0-amd64-netinst.iso",
+    "iso_url": "https://cdimage.debian.org/cdimage/archive/10.11.0/amd64/iso-cd/debian-10.11.0-amd64-netinst.iso",
+    "iso_checksum": "sha256:133430141272d8bf96cfb10b6bfd1c945f5a59ea0efc2bcb56d1033c7f2866ea"
+  }
