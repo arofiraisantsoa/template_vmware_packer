@@ -3,8 +3,8 @@
     "hostname": "debian12",
     "ssh_pass": "gestsvcansible",
     "ssh_user": "gestsvcansible",
-    "output_directory": "builds/",
-    "http_directory": "packer_files/configs",
+    "output_directory": "iso/",
+    "http_directory": "configs/",
     "iso_target_path": "./iso/debian-10.11.0-amd64-netinst.iso",
     "iso_url": "R:/DSI/INFRA/Systèmes/Linux/ISOs/debian-10.3.0-amd64-netinst.iso",
     "iso_checksum": "sha256:133430141272d8bf96cfb10b6bfd1c945f5a59ea0efc2bcb56d1033c7f2866ea"
