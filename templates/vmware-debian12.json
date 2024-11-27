@@ -3,7 +3,7 @@
     {
       "boot_command": [
         "<esc> <wait>",
-        "/install.amd/vmlinuz <wait>",
+        " /install.amd/vmlinuz <wait>",
         " initrd=/install.amd/initrd.gz <wait>",
         "append preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
         "debian-installer=fr-FR.UTF-8 <wait>",
